@@ -1,0 +1,234 @@
+// This code was edited and developed by Brandon Dao
+// in the MakeCode program for Adafruit Circuit
+// Playground Express. This program was last updated
+// on April 21, 2022.
+// https://makecode.adafruit.com/#editor
+input.onGesture(Gesture.Shake, function () {
+    if (power == 1) {
+        start = 1
+    }
+})
+input.buttonA.onEvent(ButtonEvent.Click, function () {
+    if (power == 0) {
+        light.setBrightness(255)
+        light.showAnimation(light.rainbowAnimation, 1000)
+        music.jumpUp.play()
+        pause(600)
+        power = 1
+        start = 0
+    } else {
+        select = 0
+        game = 0
+    }
+})
+input.buttonB.onEvent(ButtonEvent.Click, function () {
+    if (power == 1) {
+        music.jumpDown.play()
+        light.showAnimation(light.rainbowAnimation, 1000)
+        power = 0
+        control.reset()
+    }
+})
+let input2 = 0
+let mode = 0
+let color2 = 0
+let score = 0
+let expert = 0
+let game = 0
+let select = 0
+let start = 0
+let power = 0
+while (!(input.buttonA.isPressed())) {
+    Math.random()
+}
+forever(function () {
+    if (power == 1) {
+        if (start == 1) {
+            light.setBrightness(255)
+            music.setVolume(255)
+            music.powerUp.play()
+            expert = 0
+            score = 0
+            light.showAnimation(light.rainbowAnimation, 2000)
+            light.showAnimation(light.theaterChaseAnimation, 2000)
+            light.showAnimation(light.colorWipeAnimation, 500)
+            light.showAnimation(light.sparkleAnimation, 500)
+            game = 1
+            music.pewPew.play()
+            music.jumpUp.play()
+            light.clear()
+            light.setPixelColor(0, 0x00ffff)
+            light.setPixelColor(1, 0x0000ff)
+            light.setPixelColor(3, 0xff00ff)
+            light.setPixelColor(4, 0xffffff)
+            light.setPixelColor(6, 0xff0000)
+            light.setPixelColor(8, 0xffff00)
+            light.setPixelColor(9, 0x00ff00)
+            pause(500)
+            pins.LED.digitalWrite(true)
+            while (game == 1) {
+                light.clear()
+                pause(500)
+                color2 = Math.randomRange(1, 7)
+                if (color2 == 1) {
+                    light.setPixelColor(Math.randomRange(0, 9), 0xff0000)
+                    music.playTone(165, music.beat(BeatFraction.Whole))
+                } else if (color2 == 2) {
+                    light.setPixelColor(Math.randomRange(0, 9), 0xffff00)
+                    music.playTone(196, music.beat(BeatFraction.Whole))
+                } else if (color2 == 3) {
+                    light.setPixelColor(Math.randomRange(0, 9), 0x00ff00)
+                    music.playTone(247, music.beat(BeatFraction.Whole))
+                } else if (color2 == 4) {
+                    light.setPixelColor(Math.randomRange(0, 9), 0x00ffff)
+                    music.playTone(294, music.beat(BeatFraction.Whole))
+                } else if (color2 == 5) {
+                    light.setPixelColor(Math.randomRange(0, 9), 0x0000ff)
+                    music.playTone(349, music.beat(BeatFraction.Whole))
+                } else if (color2 == 6) {
+                    light.setPixelColor(Math.randomRange(0, 9), 0xff00ff)
+                    music.playTone(440, music.beat(BeatFraction.Whole))
+                } else {
+                    light.setPixelColor(Math.randomRange(0, 9), 0xffffff)
+                    music.playTone(523, music.beat(BeatFraction.Whole))
+                }
+                if (mode == 1) {
+                    light.clear()
+                }
+                select = 1
+                input2 = 0
+                control.timer1.reset()
+                while (select) {
+                    if (input.pinA1.isPressed()) {
+                        input2 = 1
+                        select = 0
+                        music.playTone(165, music.beat(BeatFraction.Half))
+                    } else if (input.pinA2.isPressed()) {
+                        input2 = 2
+                        select = 0
+                        music.playTone(196, music.beat(BeatFraction.Half))
+                    } else if (input.pinA3.isPressed()) {
+                        input2 = 3
+                        select = 0
+                        music.playTone(247, music.beat(BeatFraction.Half))
+                    } else if (input.pinA4.isPressed()) {
+                        input2 = 4
+                        select = 0
+                        music.playTone(294, music.beat(BeatFraction.Half))
+                    } else if (input.pinA5.isPressed()) {
+                        input2 = 5
+                        select = 0
+                        music.playTone(349, music.beat(BeatFraction.Half))
+                    } else if (input.pinA6.isPressed()) {
+                        input2 = 6
+                        select = 0
+                        music.playTone(440, music.beat(BeatFraction.Half))
+                    } else if (input.pinA7.isPressed()) {
+                        input2 = 7
+                        select = 0
+                        music.playTone(523, music.beat(BeatFraction.Half))
+                    } else if (0 >= 10000) {
+                        if (score >= 50) {
+                            select = 0
+                        } else {
+                            if (score < 50) {
+                                select = 0
+                            } else {
+                                input2 = 0
+                            }
+                            input2 = 0
+                        }
+                    } else if (input.buttonA.isPressed()) {
+                        select = 0
+                        music.playTone(131, music.beat(BeatFraction.Half))
+                        if (mode == 1) {
+                            mode = 0
+                        } else {
+                            mode = 1
+                        }
+                    } else if (input.buttonB.isPressed()) {
+                        if (power == 1) {
+                            music.jumpDown.play()
+                            light.showAnimation(light.rainbowAnimation, 1000)
+                            power = 0
+                            control.reset()
+                        }
+                    } else if (score < 50) {
+                        if (control.timer1.millis() >= 10000 - 180 * (score + 1)) {
+                            select = 0
+                        } else {
+                            input2 = 0
+                        }
+                    } else if (score >= 50) {
+                        if (control.timer1.millis() >= 1000 - 12 * (score - 49)) {
+                            select = 0
+                        } else {
+                            input2 = 0
+                        }
+                    }
+                }
+                if (input2 == color2) {
+                    score += 1
+                    music.baDing.play()
+                    light.clear()
+                    if (score >= 100) {
+                        pins.A0.digitalWrite(false)
+                        light.setAll(light.rgb(255, 189, 93))
+                        music.playMelody("E D G F B A C5 B ", 120)
+                        game = 0
+                        light.showAnimation(light.cometAnimation, 7500)
+                        light.showAnimation(light.rainbowAnimation, 5000)
+                    }
+                } else {
+                    game = 0
+                    pins.LED.digitalWrite(false)
+                    light.clear()
+                    music.playMelody("C5 A B G A F G E ", 120)
+                    for (let light2 = 0; light2 <= score; light2++) {
+                        light.setPixelColor((light2 - 1) % 10, 0xffffff)
+                        if (light2 > 60) {
+                            music.playTone(1301 + 261 * expert, 50)
+                            light.setPixelColor((light2 - 1) % 10, light.rgb(255, 63 * expert, 64 + expert * 95))
+                            if (light2 % 10 == 0) {
+                                expert += 1
+                            }
+                        } else if (light2 > 50) {
+                            music.playTone(1040, 50)
+                            light.setPixelColor((light2 - 1) % 10, 0xff00ff)
+                        } else if (light2 > 40) {
+                            music.playTone(988, 50)
+                            light.setPixelColor((light2 - 1) % 10, 0x0000ff)
+                        } else if (light2 > 30) {
+                            music.playTone(880, 50)
+                            light.setPixelColor((light2 - 1) % 10, 0x00ffff)
+                        } else if (light2 > 20) {
+                            music.playTone(784, 50)
+                            light.setPixelColor((light2 - 1) % 10, 0x00ff00)
+                        } else if (light2 > 10) {
+                            music.playTone(698, 50)
+                            light.setPixelColor((light2 - 1) % 10, 0xffff00)
+                        } else if (light2 > 0) {
+                            music.playTone(659, 50)
+                            light.setPixelColor((light2 - 1) % 10, 0xff0000)
+                        } else {
+                            if (score == 0) {
+                                music.wawawawaa.play()
+                                pause(2000)
+                            }
+                        }
+                        pause(100)
+                    }
+                    music.magicWand.play()
+                    pause(2000)
+                }
+            }
+            start = 0
+        } else if (start == 0) {
+            Math.random()
+pins.LED.digitalWrite(true)
+            pause(200)
+            pins.LED.digitalWrite(false)
+            pause(200)
+        }
+    }
+})
